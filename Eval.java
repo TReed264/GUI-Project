@@ -1,3 +1,5 @@
+package databaseexample;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
@@ -17,35 +19,27 @@ public class Eval extends JFrame implements ActionListener, ItemListener
 //NOTICE HOW A PANEL IS CREATED FOR EACH ONE THIS WILL MAKE IT EASIER BUILD
 
     public JLabel teamLabel;
-    public JTextArea commentBox;
     private JComboBox teamComboBox;
-    public JComboBox imagesComboBox;
     private JPanel teamPanel;
 
+
     private JLabel questionLabel;
+    private JLabel questionLabel2;
+    private JLabel questionLabel3;
+    private JLabel questionLabel4;
+
+    
     private JRadioButton rb1;
     private JRadioButton rb2;
     private JRadioButton rb3;
     private JPanel questionPanel;
     private ButtonGroup questionGroup1;
 
-    private JButton calcAvgButton;
+
     private JButton submitButton;
     private JButton clearButton;
     private JPanel buttonPanel;
-    private JPanel sliderPanel;
-    private JSlider q1Slider;
-    private JSlider q2Slider;
-    private JSlider q3Slider;
-    private JSlider q4Slider;
-    private JLabel q1Label;
-    private JLabel q2Label;
-    private JLabel q3Label;
-    private JLabel q4Label;
-    private JLabel commentLabel;
-    private JLabel calcAvgLabel;
-    private JLabel avgLabel;
-    
+    private JPanel clearPanel;
 
     //instance variables to hold our data from the gui object to update the database
     String myteamname;
@@ -57,9 +51,6 @@ public class Eval extends JFrame implements ActionListener, ItemListener
     double teamavg;
     boolean avgcalculated;
     String teamcomments;
-    int slider_min = 70;
-    int slider_max = 100;
-    int slider_int = 70;
     // instance variables used to manipulate database
     private Connection myConnection;
     private Statement myStatement;
@@ -108,11 +99,12 @@ public class Eval extends JFrame implements ActionListener, ItemListener
             //catch ( ClassNotFoundException exception )
             //{
             //  exception.printStackTrace();
-            //}       
+            //}   
+            
 
     }
 
-    private void createUserInterface()
+    void createUserInterface()
     {
         // get content pane for attaching GUI components
         Container contentPane = getContentPane();
@@ -122,21 +114,24 @@ public class Eval extends JFrame implements ActionListener, ItemListener
 
         // TEAM COMBO BOX SET UP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // set up Team Panel
+        //Teams text and drop down menu for selecting teams within border
         teamPanel = new JPanel();
-        teamPanel.setBounds(40, 20, 276, 48 );
+        teamPanel.setBounds(30, 20, 470, 48 );
         teamPanel.setBorder( BorderFactory.createEtchedBorder() );
         teamPanel.setLayout( null );
         contentPane.add( teamPanel );
 
         // set up Instructor Label
+        // teams text
         teamLabel = new JLabel();
-        teamLabel.setBounds( 25, 15, 100, 20 );
+        teamLabel.setBounds( 15, 13, 100, 20 );
         teamLabel.setText( "TEAMS:" );
         teamPanel.add( teamLabel );
 
         // set up accountNumberJComboBox
+        //teams drop down menu
         teamComboBox = new JComboBox();
-        teamComboBox.setBounds( 150, 15, 96, 25 );
+        teamComboBox.setBounds( 170, 10, 275, 25 );
         teamComboBox.addItem( "" );
         teamComboBox.setSelectedIndex( 0 );
         teamPanel.add( teamComboBox );
@@ -144,71 +139,108 @@ public class Eval extends JFrame implements ActionListener, ItemListener
 
         //RADIO BUTTON SET UP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // set up Question Panel and Radio Buttons
+        //question box (text and option buttons)
         questionPanel = new JPanel();
-        questionPanel.setBounds( 40, 120, 276, 75 );
+        questionPanel.setBounds( 30, 80, 470, 450 );
         questionPanel.setBorder( BorderFactory.createEtchedBorder() );
         questionPanel.setLayout( null );
         contentPane.add( questionPanel );
 
         // set up question1 Label
+        //question text
         questionLabel = new JLabel();
-        questionLabel.setBounds( 10, 15, 270, 20 );
-        questionLabel.setText( "Q1: How would you rate the instructors jokes?" );
+        questionLabel.setBounds( 15, 30, 115, 20 );
+        questionLabel.setBorder(BorderFactory.createEtchedBorder());
+        questionLabel.setText( "Q1: Technical?" );
         questionPanel.add( questionLabel );
+        
+//        questionLabel2 = new JLabel();
+//        questionLabel.setBounds( 15, 55, 115, 20 );
+//        questionLabel.setBorder(BorderFactory.createEtchedBorder());
+//        questionLabel.setText( "Q2: Useful?" );
+//        questionPanel.add( questionLabel2 );
+        
+//        questionLabel3 = new JLabel();
+//        questionLabel.setBounds( 15, 15, 115, 20 );
+//        questionLabel.setBorder(BorderFactory.createEtchedBorder());
+//        questionLabel.setText( "Q3: Clarity?" );
+//        questionPanel.add( questionLabel3 );
+//        
+//        questionLabel4 = new JLabel();
+//        questionLabel.setBounds( 15, 100, 115, 20 );
+//        questionLabel.setBorder(BorderFactory.createEtchedBorder());
+//        questionLabel.setText( "Q4: Overall?" );
+//        questionPanel.add( questionLabel4 );
 
         // set up the radio buttons for question 1
-        rb1 = new JRadioButton( "1", false );
-        rb1.setBounds(20, 30, 40, 40 );
-        rb1.setVisible(true);
-        rb1.addItemListener(this);
-
-        rb2 = new JRadioButton("2", false);
-        rb2.setBounds(80, 30, 40, 40 );
-        rb2.setVisible(true);
-        rb2.addItemListener(this);
-
-        rb3 = new JRadioButton( "3", false );
-        rb3.setBounds(140, 30, 40, 40 );
-        rb3.setVisible(true);
-        rb3.addItemListener(this);
-
-        // create logical relationship between JRadioButtons
-        questionGroup1 = new ButtonGroup();
-        questionGroup1.add( rb1 );
-        questionGroup1.add( rb2 );
-        questionGroup1.add( rb3 );
-
-        // add radio button to the panel
-        questionPanel.add( rb1 );
-        questionPanel.add( rb2 );
-        questionPanel.add( rb3 );
+        //buttons to select score
+//        rb1 = new JRadioButton( "1", false );
+//        rb1.setBounds(20, 30, 40, 40 );
+//        rb1.setVisible(true);
+//        rb1.addItemListener(this);
+//
+//        rb2 = new JRadioButton("2", false);
+//        rb2.setBounds(80, 30, 40, 40 );
+//        rb2.setVisible(true);
+//        rb2.addItemListener(this);
+//
+//        rb3 = new JRadioButton( "3", false );
+//        rb3.setBounds(140, 30, 40, 40 );
+//        rb3.setVisible(true);
+//        rb3.addItemListener(this);
+//
+//        // create logical relationship between JRadioButtons
+//        questionGroup1 = new ButtonGroup();
+//        questionGroup1.add( rb1 );
+//        questionGroup1.add( rb2 );
+//        questionGroup1.add( rb3 );
+//
+//        // add radio button to the panel
+//        questionPanel.add( rb1 );
+//        questionPanel.add( rb2 );
+//        questionPanel.add( rb3 );
 
         // SUBMIT BUTTON SET UP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         buttonPanel = new JPanel();
-        buttonPanel.setBounds( 40, 200, 276, 75 );
-        buttonPanel.setBorder( BorderFactory.createEtchedBorder() );
+        buttonPanel.setBounds( 100, 550, 120, 40 );
+        //buttonPanel.setBorder( BorderFactory.createEtchedBorder() );
         buttonPanel.setLayout( null );
         contentPane.add( buttonPanel );
 
         submitButton = new JButton( "SUBMIT" );
-        submitButton.setBounds(80, 15, 100, 50);
+        submitButton.setBounds(10, 5, 100, 30);
         submitButton.setVisible(true);
         buttonPanel.add(submitButton);
         submitButton.addActionListener(this);
+        
+        clearPanel = new JPanel();
+        clearPanel.setBounds(300, 550, 120, 40);
+        //clearPanel.setBorder(BorderFactory.createEtchedBorder());
+        clearPanel.setLayout( null );
+        contentPane.add(clearPanel);
+        
+        clearButton = new JButton("CLEAR");
+        clearButton.setBounds(10, 5, 100, 30);
+        clearButton.setVisible(true);
+        clearPanel.add(clearButton);
+        clearButton.addActionListener(this);
+        
+        
 
  
 
-        JSlider myslider = new JSlider(JSlider.HORIZONTAL, 1, 5, 1);
+        JSlider myslider = new JSlider(JSlider.HORIZONTAL, 1, 8, 1);
 
-        myslider.setBounds(80, 50, 200, 200);
-        buttonPanel.add(myslider);
+        myslider.setBounds(170, 20, 280, 50);
+        myslider.setBorder(BorderFactory.createEtchedBorder());
+        questionPanel.add(myslider);
         //read teams from database and
         // place them in teamsJComboBox
         loadTeams();
         
 
-        setTitle( "EVAL" ); // set title bar string
-        setSize( 375, 410 ); // set window size
+        setTitle( "Team presentation grading" ); // set title bar string
+        setSize( 550, 650 ); // set window size
         setVisible( true ); // display window
     }
 
