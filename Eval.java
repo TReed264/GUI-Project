@@ -38,6 +38,7 @@ public class Eval extends JFrame implements ActionListener, ItemListener
 
     private JButton submitButton;
     private JButton clearButton;
+    private JButton averageButton;
     private JPanel buttonPanel;
     private JPanel clearPanel;
 
@@ -141,7 +142,7 @@ public class Eval extends JFrame implements ActionListener, ItemListener
         // set up Question Panel and Radio Buttons
         //question box (text and option buttons)
         questionPanel = new JPanel();
-        questionPanel.setBounds( 30, 80, 470, 450 );
+        questionPanel.setBounds( 30, 80, 470, 245 );
         questionPanel.setBorder( BorderFactory.createEtchedBorder() );
         questionPanel.setLayout( null );
         contentPane.add( questionPanel );
@@ -149,28 +150,28 @@ public class Eval extends JFrame implements ActionListener, ItemListener
         // set up question1 Label
         //question text
         questionLabel = new JLabel();
-        questionLabel.setBounds( 15, 30, 115, 20 );
-        questionLabel.setBorder(BorderFactory.createEtchedBorder());
+        questionLabel.setBounds( 15, 20, 115, 20 );
+        //questionLabel.setBorder(BorderFactory.createEtchedBorder());
         questionLabel.setText( "Q1: Technical?" );
         questionPanel.add( questionLabel );
         
-//        questionLabel2 = new JLabel();
-//        questionLabel.setBounds( 15, 55, 115, 20 );
-//        questionLabel.setBorder(BorderFactory.createEtchedBorder());
-//        questionLabel.setText( "Q2: Useful?" );
-//        questionPanel.add( questionLabel2 );
+        questionLabel2 = new JLabel();
+        questionLabel2.setBounds( 15, 82, 115, 20 );
+        //questionLabel2.setBorder(BorderFactory.createEtchedBorder());
+        questionLabel2.setText( "Q2: Useful?" );
+        questionPanel.add( questionLabel2 );
         
-//        questionLabel3 = new JLabel();
-//        questionLabel.setBounds( 15, 15, 115, 20 );
-//        questionLabel.setBorder(BorderFactory.createEtchedBorder());
-//        questionLabel.setText( "Q3: Clarity?" );
-//        questionPanel.add( questionLabel3 );
-//        
-//        questionLabel4 = new JLabel();
-//        questionLabel.setBounds( 15, 100, 115, 20 );
-//        questionLabel.setBorder(BorderFactory.createEtchedBorder());
-//        questionLabel.setText( "Q4: Overall?" );
-//        questionPanel.add( questionLabel4 );
+        questionLabel3 = new JLabel();
+        questionLabel3.setBounds( 15, 144, 115, 20 );
+       // questionLabel3.setBorder(BorderFactory.createEtchedBorder());
+        questionLabel3.setText( "Q3: Clarity?" );
+        questionPanel.add( questionLabel3 );
+        
+        questionLabel4 = new JLabel();
+        questionLabel4.setBounds( 15, 206, 115, 20 );
+        //questionLabel4.setBorder(BorderFactory.createEtchedBorder());
+        questionLabel4.setText( "Q4: Overall?" );
+        questionPanel.add( questionLabel4 );
 
         // set up the radio buttons for question 1
         //buttons to select score
@@ -228,12 +229,28 @@ public class Eval extends JFrame implements ActionListener, ItemListener
         
 
  
-
+        //slider
         JSlider myslider = new JSlider(JSlider.HORIZONTAL, 1, 8, 1);
-
-        myslider.setBounds(170, 20, 280, 50);
-        myslider.setBorder(BorderFactory.createEtchedBorder());
+        myslider.setBounds(170, 7, 280, 45);
+        //myslider.setBorder(BorderFactory.createEtchedBorder());
         questionPanel.add(myslider);
+        
+        JSlider myslider2 = new JSlider(JSlider.HORIZONTAL, 1, 8, 1);
+        myslider2.setBounds(170, 69, 280, 45);
+        //myslider2.setBorder(BorderFactory.createEtchedBorder());
+        questionPanel.add(myslider2);
+        
+        JSlider myslider3 = new JSlider(JSlider.HORIZONTAL, 1, 8, 1);
+        myslider3.setBounds(170, 131, 280, 45);
+        //myslider3.setBorder(BorderFactory.createEtchedBorder());
+        questionPanel.add(myslider3);
+        
+        JSlider myslider4 = new JSlider(JSlider.HORIZONTAL, 1, 8, 1);
+        myslider4.setBounds(170, 193, 280, 45);
+        //myslider4.setBorder(BorderFactory.createEtchedBorder());
+        questionPanel.add(myslider4);
+       
+        
         //read teams from database and
         // place them in teamsJComboBox
         loadTeams();
